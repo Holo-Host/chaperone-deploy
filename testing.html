@@ -1,0 +1,17 @@
+
+<script type="text/javascript" src="holo_hosting_chaperone.js"></script>
+
+<script type="text/javascript">
+    (async function () {
+	const { Chaperone, ...rest } = await chaperone;
+
+	Object.assign( window, rest );
+	
+	window.chaperone = new Chaperone({
+	    "mode": Chaperone.DEVELOP,
+	    "port": 24246,
+	    "agent_id": "HcScivbfMnufkqsh84NA45GekDW7mruxfgMYquW5QMko66et6ujfQkFX6Srxv8i",
+	    "instance_prefix": "QmYUffAgALxiUQonbhAVXjknTq3dNf3AfHQGQ8P5xny7TU",
+	});
+    })();
+</script>
