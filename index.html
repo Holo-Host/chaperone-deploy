@@ -1,10 +1,272 @@
+<html>
+    <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-<script type="text/javascript" src="/holo_hosting_chaperone.js"></script>
+	<style type="text/css">
+	  {
+	    /* Bootstrap style overrides */
+	  }
 
-<script type="text/javascript">
-    (async function () {
-	const { Chaperone } = await chaperone;
+	  body {
+	    background: none transparent;
+	    /* background-color: rgba(0,0,0,0.4); */
+	    font-size: 12px;
+	  }
+	  .branding {
+	    color: #888;
+	    margin-top: 36px;
+	  }
+	  .logo {
+	    width: 24px;
+	    height: 24px;
+	    margin: 4px;
+	  }
 
-	window.chaperone = new Chaperone();
-    })();
-</script>
+	  .modal-content {
+	    padding-top: 30px;
+	    padding-bottom: 20px;
+	    padding-left: 30px;
+	    padding-right: 30px;
+	    box-shadow: 0 0 20px #666;
+	  }
+	  .modal-content .modal-header,
+	  .modal-content .modal-body,
+	  .modal-content .modal-footer {
+	    border: none !important;
+	  }
+	  .modal-header .btn-secondary {
+	    background-color: #828282 !important;
+	    border-color: #828282 !important;
+	  }
+	  .modal-header .close {
+	    position: absolute;
+	    top: 3px;
+	    right: 7px;
+	  }
+	  .btn-secondary-outline {
+	    color: #828282;
+	  }
+	  input.form-control {
+	    border-top: none;
+	    border-left: none;
+	    border-right: none;
+	    border-radius: 0;
+	  }
+	  .form-group label {
+	    font-size: 11px;
+	    color: #7e8b9c;
+	    font-weight: bold;
+	    text-transform: uppercase;
+	  }
+	  .form-control:focus {
+	    border-top: none;
+	    border-left: none;
+	    border-right: none;
+	    border-bottom: 1px solid #545b62;
+	    box-shadow: none;
+	  }
+
+	  .btn-group {
+	    border-radius: 19px !important;
+	    border: 1px solid #828282;
+	  }
+	  .btn-group button:first-child {
+	    margin-left: 0 !important;
+	  }
+	  .btn-group button:last-child {
+	    margin-right: 0 !important;
+	  }
+	  button.btn {
+	    padding: 2px 30px;
+	  }
+	  button.active {
+	    border-radius: 19px !important;
+	    margin-left: -15px;
+	    margin-right: -15px;
+	    font-weight: bold;
+	  }
+	  .btn-rounded {
+	    border-radius: 50px;
+	  }
+	  .modal-footer button {
+	    background-color: #bdbdbd;
+	    border-color: #bdbdbd;
+	    padding: 10px 75px;
+	    font-weight: bold;
+	    box-shadow: 0 0 10px #ddd;
+	  }
+	  .valid-feedback,
+	  .form-control.is-valid {
+	    color: rgb(123,222,177);
+	    border-color: rgb(123,222,177);
+	  }
+	  .invalid-feedback,
+	  .form-control.is-invalid {
+	    color: rgb(250,135,137);
+	    border-color: rgb(250,135,137);
+	  }
+	  .form-control.is-valid:focus {
+	    border-top: none;
+	    border-left: none;
+	    border-right: none;
+	    border-bottom: 1px solid green;
+	    box-shadow: none;
+	  }
+	  .form-control.is-invalid:focus {
+	    border-top: none;
+	    border-left: none;
+	    border-right: none;
+	    border-bottom: 1px solid red;
+	    box-shadow: none;
+	  }
+	</style>
+    </head>
+    <body>
+	<div class="modal fade" id="modal"
+	     data-backdrop="static"
+	     tabindex="-1" role="dialog" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content" id="sign-in">
+		    <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			</button>
+
+			<div class="btn-group mx-auto" role="group">
+			    <button type="button"
+				    class="btn btn-secondary active">Login</button>
+			    <button type="button" onclick="showSignUp()"
+				    class="btn btn-secondary-outline">Sign Up</button>
+			</div>
+		    </div>
+		    <div class="modal-body">
+			<form>
+			    <div class="form-group">
+				<label class="col-form-label">Email:</label>
+				<input type="text" class="form-control" id="email">
+			    </div>
+			    <div class="form-group">
+				<label class="col-form-label">Password:</label>
+				<input type="password" class="form-control" id="password">
+				<div class="invalid-feedback"></div>
+			    </div>
+			</form>
+		    </div>
+		    <div class="modal-footer">
+			<div class="mx-auto text-center">
+			    <button type="button" class="btn btn-secondary btn-md btn-rounded"
+				    onclick="formSubmit()">Login</button>
+
+			    <div class="branding">
+				<img class="logo" src="dist/holo-logo.png" />
+				<p><small><b>Login with Holo</b></small></p>
+			    </div>
+			</div>
+
+			<div style="padding: 30px 30px 10px; color: #999;">
+			    <p><small>*Holo doesn't store your password so we cannot recover it for
+				    you.  Please save your password securely!</small></p>
+			</div>
+		    </div>
+		</div>
+
+		<div class="modal-content" id="sign-up">
+		    <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			</button>
+
+			<div class="btn-group mx-auto" role="group">
+			    <button type="button" onclick="showSignIn()"
+				    class="btn btn-secondary-outline">Login</button>
+			    <button type="button"
+				    class="btn btn-secondary active">Sign Up</button>
+			</div>
+		    </div>
+		    <div class="modal-body">
+			<form>
+			    <div class="form-group">
+				<label class="col-form-label">Email:</label>
+				<input type="text" class="form-control" id="signup-email">
+			    </div>
+			    <div class="form-group">
+				<label class="col-form-label">Password:</label>
+				<input type="password" class="form-control" id="signup-password">
+			    </div>
+			    <div class="form-group">
+				<label class="col-form-label">Retype Password:</label>
+				<input type="password" class="form-control" id="signup-password-confirm">
+				<div class="invalid-feedback" id="signup-password-confirm-feedback"></div>
+			    </div>
+			</form>
+		    </div>
+		    <div class="modal-footer">
+			<div class="mx-auto text-center">
+			    <button type="button" class="btn btn-secondary btn-md btn-rounded"
+				    onclick="formSubmit()">Create Account</button>
+
+			    <div class="branding">
+				<img class="logo" src="dist/holo-logo.png" />
+				<p><small><b>Login with Holo</b></small></p>
+			    </div>
+			</div>
+
+			<div style="padding: 30px 30px 10px; color: #999;">
+			    <p><small>*Holo doesn't store your password so we cannot recover it for
+				    you.  Please save your password securely!</small></p>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+	<script type="text/javascript" src="/dist/holo_hosting_chaperone.js"></script>
+	<script type="text/javascript">
+    	  (async () => {
+	      let $signin = $("#sign-in");
+	      let $signup = $("#sign-up");
+
+	      window.showSignIn = function () {
+		  window.expect = "signin";
+
+		  $signin.show();
+		  $signup.hide();
+	      }
+	      window.showSignUp = function () {
+		  window.expect = "signup";
+
+		  $signin.hide();
+		  $signup.show();
+	      }
+
+	      Object.assign( window, await chaperone );
+
+	      let client;
+	      try {
+		  client = new Chaperone({
+		      "timeout": 2000,
+		      "mode": Chaperone.HCC,
+		      "instance_prefix": "%(instance_prefix)s",
+		      "web_user_legend": %(web_user_legend)s,
+		      "path": "/",
+
+		      "host": "%(connection.address)s",
+		      "port": %(connection.port)s,
+		      "ssl": %(connection.secure)s,
+
+		      "debug": %(log_level)s,
+		  });
+	      } catch ( err ) {
+		  console.error( String(err) );
+	      }
+
+	      window.client = client;
+	  })();
+	</script>
+    </body>
+</html>
