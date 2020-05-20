@@ -248,19 +248,7 @@
 
 	      let client;
 	      try {
-		  client = new Chaperone({
-		      "timeout": 2000,
-		      "mode": Chaperone.HCC,
-		      "instance_prefix": "%(instance_prefix)s",
-		      "web_user_legend": "%(web_user_legend)s",
-		      "path": "/",
-
-		      "host": "%(connection.address)s",
-		      "port": "%(connection.port)s",
-		      "ssl": "%(connection.secure)s",
-
-		      "debug": "%(log_level)s",
-		  });
+		  client = new Chaperone();
 	      } catch ( err ) {
 		  console.error( String(err) );
 	      }
