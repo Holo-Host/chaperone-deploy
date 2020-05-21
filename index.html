@@ -248,7 +248,10 @@
 
 	      let client;
 	      try {
-		  client = new Chaperone();
+		  client = new Chaperone({
+				"ssl": true,
+				"debug": true
+			});
 	      } catch ( err ) {
 		  console.error( String(err) );
 	      }
