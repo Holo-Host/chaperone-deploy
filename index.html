@@ -249,9 +249,12 @@
 	      let client;
 	      try {
 		  client = new Chaperone({
+			"connection": {
 				"ssl": true,
 				"port": 443,
-				"debug": true
+				"path": "/hosting/"
+			},
+			"debug": true
 			});
 	      } catch ( err ) {
 		  console.error( String(err) );
