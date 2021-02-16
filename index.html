@@ -153,7 +153,7 @@
 			<div id="sign-in">
 				<img class="app-logo">
 				<h1><span class="app-name">[Name of hApp]</span> Login</h1>
-				<form id="sign-in">
+				<form>
 					<div class="form-group">
 						<label class="col-form-label">Email:</label>
 						<input type="text" class="form-control" id="email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
@@ -312,12 +312,18 @@
 						onclick="formSubmit(this.parentElement.parentElement.querySelector('form'))">Login</button>
 				</div>
 			</div>
-
 			<div id="sign-up">
 				<img class="app-logo">
 				<h1><span class="app-name">[Name of hApp]</span></h1>
 				<h2>Create Login Credentials</h2>
-				<form id="sign-up">
+				<form>
+					<div class="form-group">
+						<label class="col-form-label">
+							Joining Code: 
+							<a id="joining-info" target="_blank"><svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.024 2.724c-.96 0-1.752.78-1.752 1.752a.443.443 0 10.888 0c0-.468.384-.852.852-.852.492 0 .852.348.852.816v.036c0 .264-.072.888-.924 1.02a.452.452 0 00-.384.444v1.212a.443.443 0 10.888 0V6.3c1.128-.348 1.308-1.32 1.308-1.86.024-.96-.768-1.716-1.728-1.716zM6.024 8.136a.576.576 0 00-.576.576c0 .312.264.576.576.576a.584.584 0 00.576-.576.584.584 0 00-.576-.576z" fill="#606C8B"/><path d="M6.024.096A5.864 5.864 0 00.168 5.952a5.864 5.864 0 005.856 5.856 5.864 5.864 0 005.856-5.856A5.864 5.864 0 006.024.096zm0 10.824a4.978 4.978 0 01-4.968-4.968A4.978 4.978 0 016.024.984a4.978 4.978 0 014.968 4.968C10.98 8.688 8.76 10.92 6.024 10.92z" fill="#606C8B"/></svg></a>
+						</label>
+						<input type="text" class="form-control" id="signup-joining-code" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
+					</div>
 					<div class="form-group">
 						<label class="col-form-label">Email:</label>
 						<input type="text" class="form-control" id="signup-email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
@@ -634,7 +640,7 @@
 					line-height: 23px;
 					letter-spacing: 0.6em;
 					text-transform: uppercase;
-
+					
 					color: #000000;">Holo</span></p>
 				<p>*Remember, Holo doesn’t store your password so we can’t recover it for you. Please save your password securely!</p>
 				<p><a href="https://forum.holo.host/t/how-to-control-your-own-data/1176" target="_blank">Learn more</a> about controlling your own data.</p>
@@ -645,7 +651,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+	
 	<script type="text/javascript">
 		let $signin = $("#sign-in");
 		let $signup = $("#sign-up");
@@ -657,7 +663,6 @@
 	    }
 	    window.showSignUp = function () {
 		  window.expect = "signup";
-
 		  $signin.hide();
 		  $signup.show();
 	    }
@@ -670,7 +675,12 @@
     	  $(".app-logo").attr("src", url_params.get('logo_url'));
 		} else {
 		  $(".app-logo").hide();
-		};
+		}
+		if (url_params.has('info_link')) {
+    	  $("#joining-info").attr("href", url_params.get('info_link'));
+		} else {
+		  $("#joining-info").hide();
+		}
 
 		window.passwordShowHide = function(buttonElement) {
 		  const shownSiblings = buttonElement.parentElement.querySelectorAll("input[type=text]");
@@ -715,7 +725,7 @@
 						inputElement.classList.remove("is-valid");
 					}
 				}
-
+				
 			}
 			if (allValid) {
 				formElement.classList.add("all-valid");
@@ -725,7 +735,7 @@
 
 			return allValid;
 		}
-
+		
 		window.resetForms = function () {
 			for (const inputElement of document.getElementsByClassName("form-control")) {
 				inputElement.classList.remove("is-valid");
