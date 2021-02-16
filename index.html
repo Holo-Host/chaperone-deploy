@@ -153,7 +153,7 @@
 			<div id="sign-in">
 				<img class="app-logo">
 				<h1><span class="app-name">[Name of hApp]</span> Login</h1>
-				<form>
+				<form id="sign-in">
 					<div class="form-group">
 						<label class="col-form-label">Email:</label>
 						<input type="text" class="form-control" id="email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
@@ -317,7 +317,7 @@
 				<img class="app-logo">
 				<h1><span class="app-name">[Name of hApp]</span></h1>
 				<h2>Create Login Credentials</h2>
-				<form>
+				<form id="sign-up">
 					<div class="form-group">
 						<label class="col-form-label">Email:</label>
 						<input type="text" class="form-control" id="signup-email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
@@ -634,7 +634,7 @@
 					line-height: 23px;
 					letter-spacing: 0.6em;
 					text-transform: uppercase;
-					
+
 					color: #000000;">Holo</span></p>
 				<p>*Remember, Holo doesn’t store your password so we can’t recover it for you. Please save your password securely!</p>
 				<p><a href="https://forum.holo.host/t/how-to-control-your-own-data/1176" target="_blank">Learn more</a> about controlling your own data.</p>
@@ -645,7 +645,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	
+
 	<script type="text/javascript">
 		let $signin = $("#sign-in");
 		let $signup = $("#sign-up");
@@ -715,7 +715,7 @@
 						inputElement.classList.remove("is-valid");
 					}
 				}
-				
+
 			}
 			if (allValid) {
 				formElement.classList.add("all-valid");
@@ -725,7 +725,7 @@
 
 			return allValid;
 		}
-		
+
 		window.resetForms = function () {
 			for (const inputElement of document.getElementsByClassName("form-control")) {
 				inputElement.classList.remove("is-valid");
