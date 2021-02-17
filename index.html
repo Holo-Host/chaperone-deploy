@@ -156,12 +156,12 @@
 				<form>
 					<div class="form-group">
 						<label class="col-form-label">Email:</label>
-						<input type="text" class="form-control" id="email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
+						<input type="text" class="form-control required" id="email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
 					</div>
 					<div class="form-group">
 						<label class="col-form-label">Password:</label>
 						<div class="input-group">
-							<input type="password" class="form-control password" id="password" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
+							<input type="password" class="form-control password required" id="password" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
 							<button type="button" aria-hidden="true" class="input-group-addon password-show-hide" onClick="passwordShowHide(this)">
 								<svg class="password-show" width="20.150009" height="15.7"
 									xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -326,12 +326,12 @@
 					</div>
 					<div class="form-group">
 						<label class="col-form-label">Email:</label>
-						<input type="text" class="form-control" id="signup-email" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
+						<input type="text" class="form-control" id="signup-email required" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
 					</div>
 					<div class="form-group">
 						<label class="col-form-label">Create Password:</label>
 						<div class="input-group">
-							<input type="password" class="form-control password" id="signup-password" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
+							<input type="password" class="form-control password required" id="signup-password" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
 							<button type="button" aria-hidden="true" class="input-group-addon password-show-hide" onClick="passwordShowHide(this)">
 								<svg class="password-show" width="20.150009" height="15.7"
 									xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -478,7 +478,7 @@
 					<div class="form-group">
 						<label class="col-form-label">Re-Enter Password:</label>
 						<div class="input-group">
-							<input type="password" class="form-control password-confirm" id="signup-password-confirm" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
+							<input type="password" class="form-control password-confirm required" id="signup-password-confirm" onBlur="this.classList.add('has-blurred'); validate(this.closest('form'))">
 							<button type="button" aria-hidden="true" class="input-group-addon password-show-hide" onClick="passwordShowHide(this)">
 								<svg class="password-show" width="20.150009" height="15.7"
 									xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -694,9 +694,12 @@
 			let allValid = true;
 			const formChildren = formElement.querySelectorAll("input");
 			for (const inputElement of formChildren.values()) {
+				let isValid = true;
 				const shouldGiveFeedback = hasSubmitted || inputElement.classList.contains("has-blurred")
 				const isEmpty = inputElement.value.length === 0;
-				let isValid = !isEmpty;
+				if (isEmpty && inputElement.classList.contains("required")) {
+					isValid = false;
+				}
 				if (inputElement.classList.contains("password-confirm")) {
 					const isMatching = formElement.querySelector("input.password").value === inputElement.value;
 					if (!isMatching) {
